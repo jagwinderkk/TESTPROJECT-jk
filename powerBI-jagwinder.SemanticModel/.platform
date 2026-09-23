@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "powerBI-jagwinder"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "66954652-ddce-4ffe-8ca6-e52c6a93722e"
+  }
+}
