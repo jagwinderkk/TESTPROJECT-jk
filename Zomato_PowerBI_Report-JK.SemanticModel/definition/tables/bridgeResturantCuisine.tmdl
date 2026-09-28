@@ -1,0 +1,29 @@
+table bridgeResturantCuisine
+	lineageTag: 672737a4-8071-4e26-ac28-56a50f8a335a
+
+	column RestaurantID
+		dataType: string
+		lineageTag: edf515a6-61e7-436c-9aa1-28e65e310496
+		summarizeBy: none
+		sourceColumn: RestaurantID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CuisineName
+		dataType: string
+		lineageTag: 2e0317a9-7655-4de7-b2be-dbac68f385bd
+		summarizeBy: none
+		sourceColumn: CuisineName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition bridgeResturantCuisine = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("3uz64mibb4nupcqihluo63sity-wfzm4zlbrqeuhgeccwo6kc3np4.datawarehouse.fabric.microsoft.com"),
+				    JagwinderLakehouseDev = Source{[Name="JagwinderLakehouseDev"]}[Data],
+				    dbo_bridgeResturantCuisine = JagwinderLakehouseDev{[Schema="dbo",Item="bridgeResturantCuisine"]}[Data]
+				in
+				    dbo_bridgeResturantCuisine
+

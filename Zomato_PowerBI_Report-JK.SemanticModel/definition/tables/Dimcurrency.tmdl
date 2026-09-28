@@ -1,0 +1,31 @@
+table Dimcurrency
+	lineageTag: bc18edfd-170b-4345-92f7-b7bf970e3c71
+
+	column CurrencyCode
+		dataType: string
+		lineageTag: 724e415e-af11-462d-8085-4ddd7a4e29a6
+		summarizeBy: none
+		sourceColumn: CurrencyCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column CurrencyName
+		dataType: string
+		lineageTag: 7d09b6f6-6172-418b-a6e5-6871d81abf09
+		summarizeBy: none
+		sourceColumn: CurrencyName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dimcurrency = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("3uz64mibb4nupcqihluo63sity-wfzm4zlbrqeuhgeccwo6kc3np4.datawarehouse.fabric.microsoft.com"),
+				    JagwinderLakehouseDev = Source{[Name="JagwinderLakehouseDev"]}[Data],
+				    dbo_Dimcurrency = JagwinderLakehouseDev{[Schema="dbo",Item="Dimcurrency"]}[Data]
+				in
+				    dbo_Dimcurrency
+
+	annotation PBI_ResultType = Table
+

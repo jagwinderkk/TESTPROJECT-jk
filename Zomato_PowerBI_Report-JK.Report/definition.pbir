@@ -3,7 +3,7 @@
   "version": "4.0",
   "datasetReference": {
     "byPath": {
-      "path": "../powerBI-jagwinder.SemanticModel"
+      "path": "../Zomato_PowerBI_Report-JK.SemanticModel"
     }
   }
 }

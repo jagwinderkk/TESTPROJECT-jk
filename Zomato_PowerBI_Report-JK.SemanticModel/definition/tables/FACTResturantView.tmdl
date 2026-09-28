@@ -1,0 +1,117 @@
+table FACTResturantView
+	lineageTag: b429b81b-10ec-4ee0-8743-fabc0f061d8b
+
+	column RestaurantID
+		dataType: string
+		lineageTag: dcd58672-2f30-4ec8-9f64-1ea88f77094b
+		summarizeBy: none
+		sourceColumn: RestaurantID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ResturantKey
+		dataType: int64
+		formatString: 0
+		lineageTag: d91a828f-6ab5-42d3-b47b-90f3940b6a5a
+		summarizeBy: count
+		sourceColumn: ResturantKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column RatingKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 1708a3d5-cde3-47f9-9bb8-4848d8538918
+		summarizeBy: none
+		sourceColumn: RatingKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column AverageCostForTwo
+		dataType: string
+		lineageTag: ebcb3e8f-2bc7-4268-924c-472bfe62eed2
+		summarizeBy: none
+		sourceColumn: AverageCostForTwo
+
+		annotation SummarizationSetBy = Automatic
+
+	column PriceRange
+		dataType: string
+		lineageTag: 3ba22e56-836e-4345-8e46-7b96c24e4b5e
+		summarizeBy: none
+		sourceColumn: PriceRange
+
+		annotation SummarizationSetBy = Automatic
+
+	column Votes
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b95dde7-f80c-4d8a-ae77-3fcaae9390f4
+		summarizeBy: sum
+		sourceColumn: Votes
+
+		annotation SummarizationSetBy = Automatic
+
+	column HasTableBooking
+		dataType: string
+		lineageTag: d40df8d6-5ff3-4130-a76e-edfff6693348
+		summarizeBy: none
+		sourceColumn: HasTableBooking
+
+		annotation SummarizationSetBy = Automatic
+
+	column HasOnlineDelivery
+		dataType: string
+		lineageTag: 8133e42e-4d8d-4aee-9443-fb24ad102630
+		summarizeBy: none
+		sourceColumn: HasOnlineDelivery
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsDeliveringNow
+		dataType: string
+		lineageTag: e4985918-48e9-4d99-9736-ec796ef5369f
+		summarizeBy: none
+		sourceColumn: IsDeliveringNow
+
+		annotation SummarizationSetBy = Automatic
+
+	column SwitchToOrderMenu
+		dataType: string
+		lineageTag: ef8b399a-5036-464a-892b-2806723c62ac
+		summarizeBy: none
+		sourceColumn: SwitchToOrderMenu
+
+		annotation SummarizationSetBy = Automatic
+
+	column CurrencyCode
+		dataType: string
+		lineageTag: b07e2cbe-08da-4970-acac-f4a7492b3c06
+		summarizeBy: none
+		sourceColumn: CurrencyCode
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FACTResturantView = m
+		mode: import
+		source = ```
+				let
+				    Source = Sql.Database(
+				        "3uz64mibb4nupcqihluo63sity-wfzm4zlbrqeuhgeccwo6kc3np4.datawarehouse.fabric.microsoft.com",
+				        "JagwinderLakehouseDev",
+				        [
+				            Query = "
+				                SELECT *
+				                FROM dbo.FACTResturantView
+				                
+				            "
+				        ]
+				    )
+				in
+				    Source
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
