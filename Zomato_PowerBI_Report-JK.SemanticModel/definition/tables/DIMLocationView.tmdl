@@ -1,0 +1,72 @@
+table DIMLocationView
+	lineageTag: 410fa253-c701-4ae0-aab1-f18967f51b01
+
+	column LocationKey
+		dataType: int64
+		formatString: 0
+		lineageTag: cf5691de-4503-4194-b3aa-e9bfb39d455a
+		summarizeBy: count
+		sourceColumn: LocationKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 809522e9-457d-4d5d-bc06-144a61477086
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocalityVerbose
+		dataType: string
+		lineageTag: 6b57161d-0858-4083-9288-1883a049365d
+		summarizeBy: none
+		sourceColumn: LocalityVerbose
+
+		annotation SummarizationSetBy = Automatic
+
+	column Locality_clean_name
+		dataType: string
+		lineageTag: fd0b5aa7-782f-42c4-8574-9326641e5878
+		summarizeBy: none
+		sourceColumn: Locality_clean_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Longitude
+		dataType: string
+		lineageTag: 1bec80be-52c3-4c2e-8200-a7793da6297e
+		summarizeBy: none
+		sourceColumn: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column Latitude
+		dataType: string
+		lineageTag: f19d9ec6-2839-4d78-a77e-70506355e062
+		summarizeBy: none
+		sourceColumn: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column RestaurantID
+		dataType: string
+		lineageTag: b8e94a4c-ab3f-4a92-bbfe-ee885c12aca3
+		summarizeBy: none
+		sourceColumn: RestaurantID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIMLocationView = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("3uz64mibb4nupcqihluo63sity-wfzm4zlbrqeuhgeccwo6kc3np4.datawarehouse.fabric.microsoft.com"),
+				    JagwinderLakehouseDev = Source{[Name="JagwinderLakehouseDev"]}[Data],
+				    dbo_DIMLocationView = JagwinderLakehouseDev{[Schema="dbo",Item="DIMLocationView"]}[Data]
+				in
+				    dbo_DIMLocationView
+
+	annotation PBI_ResultType = Table
+
