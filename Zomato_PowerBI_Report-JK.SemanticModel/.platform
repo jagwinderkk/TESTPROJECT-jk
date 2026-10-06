@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Zomato_PowerBI_Report-JK"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "72a1edf5-69c2-498f-b378-07d3612a8eed"
+  }
+}

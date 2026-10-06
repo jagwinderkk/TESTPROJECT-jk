@@ -1,0 +1,27 @@
+relationship AutoDetected_14d62155-1c1b-44fa-86a7-07d54bb00a36
+	fromColumn: bridgeResturantCuisine.RestaurantID
+	toColumn: DIMLocationView.RestaurantID
+
+relationship AutoDetected_eccd5e2e-85ae-4308-b956-f5a9f44e808b
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: DimResturantView.RestaurantID
+	toColumn: DIMLocationView.RestaurantID
+
+relationship AutoDetected_485ff138-5ea6-44ae-aeaa-980d39120644
+	fromColumn: FACTResturantView.RestaurantID
+	toColumn: DIMLocationView.RestaurantID
+
+relationship AutoDetected_f5a2f7c5-2309-4930-849b-105041023021
+	fromColumn: bridgeResturantCuisine.CuisineName
+	toColumn: DimCuisinesView.CuisineName
+
+relationship AutoDetected_f3433d57-69a5-448a-a662-b765f37d3e6f
+	fromColumn: FACTResturantView.RatingKey
+	toColumn: DimRatingView.RatingKey
+
+relationship AutoDetected_81de66a9-efef-4f70-b7bd-42f7057cd2ca
+	isActive: false
+	fromColumn: FACTResturantView.ResturantKey
+	toColumn: DimResturantView.ResturantKey
+

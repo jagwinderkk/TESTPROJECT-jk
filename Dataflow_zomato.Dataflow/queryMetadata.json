@@ -1,0 +1,29 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {
+    "allowModernEvaluationEngine": true
+  },
+  "name": "Dataflow_zomato",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "DefaultDestination": {
+      "queryId": "2db3dc05-6f84-4707-a0ab-77173b572bff",
+      "queryName": "DefaultDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    },
+    "ZomatoRestaurantDataset csv": {
+      "queryId": "df4e3ea1-b8cb-4dd8-a017-b173eb3d46cf",
+      "queryName": "ZomatoRestaurantDataset csv",
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"9051e4aa-eba2-4067-8ac3-f3b746200813\",\"DatasourceId\":\"64e62218-74bd-497e-aac2-03b2c02f9a73\"}"
+    }
+  ]
+}
