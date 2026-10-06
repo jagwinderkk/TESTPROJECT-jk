@@ -1,0 +1,186 @@
+table zomatorestaurantdataset
+	lineageTag: e0fa4cb8-4ad6-4d01-bf88-48258f7b730c
+
+	column RestaurantID
+		dataType: string
+		lineageTag: 05ed28b2-279e-48e4-ae03-c04ebb0f3fe3
+		summarizeBy: none
+		sourceColumn: RestaurantID
+
+		annotation SummarizationSetBy = Automatic
+
+	column RestaurantName
+		dataType: string
+		lineageTag: 191e63e0-7f59-4b80-b07d-fb8708c8d646
+		summarizeBy: none
+		sourceColumn: RestaurantName
+
+		annotation SummarizationSetBy = Automatic
+
+	column CountryCode
+		dataType: string
+		lineageTag: 4301ba71-1bde-42cf-8dfb-a11761ad7c03
+		summarizeBy: none
+		sourceColumn: CountryCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 1196fcff-bbbe-4067-b15f-9f6e2f826239
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column Address
+		dataType: string
+		lineageTag: 3eaf9a60-0277-45c5-b3f9-b7c508485964
+		summarizeBy: none
+		sourceColumn: Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column Locality
+		dataType: string
+		lineageTag: 39bcc079-25c1-4e10-8cdb-18f2eb525136
+		summarizeBy: none
+		sourceColumn: Locality
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocalityVerbose
+		dataType: string
+		lineageTag: c87c1836-77cf-4ae0-b817-115c39629f71
+		summarizeBy: none
+		sourceColumn: LocalityVerbose
+
+		annotation SummarizationSetBy = Automatic
+
+	column Longitude
+		dataType: string
+		lineageTag: 8c266786-4728-4923-9ffb-5cf430a5bdd2
+		summarizeBy: none
+		sourceColumn: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column Latitude
+		dataType: string
+		lineageTag: b701b5ca-0782-4292-aa4d-ef2ad5832dac
+		summarizeBy: none
+		sourceColumn: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cuisines
+		dataType: string
+		lineageTag: c3cf8375-60ef-4a0d-8ece-ee5629af7fb3
+		summarizeBy: none
+		sourceColumn: Cuisines
+
+		annotation SummarizationSetBy = Automatic
+
+	column AverageCostForTwo
+		dataType: string
+		lineageTag: e0d73968-be1f-4d5a-bb1c-6e620cf9b937
+		summarizeBy: none
+		sourceColumn: AverageCostForTwo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Currency
+		dataType: string
+		lineageTag: 83f42174-28d1-48de-9043-4e88f88a1a84
+		summarizeBy: none
+		sourceColumn: Currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column HasTableBooking
+		dataType: string
+		lineageTag: fffde51e-126b-4857-b98c-6736a149553b
+		summarizeBy: none
+		sourceColumn: HasTableBooking
+
+		annotation SummarizationSetBy = Automatic
+
+	column HasOnlineDelivery
+		dataType: string
+		lineageTag: cc8edd88-82e1-4b0e-b495-4a36dfd5a976
+		summarizeBy: none
+		sourceColumn: HasOnlineDelivery
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsDeliveringNow
+		dataType: string
+		lineageTag: 163b5058-b292-49ca-b023-c66dcb577fd4
+		summarizeBy: none
+		sourceColumn: IsDeliveringNow
+
+		annotation SummarizationSetBy = Automatic
+
+	column SwitchToOrderMenu
+		dataType: string
+		lineageTag: 88015ca8-d898-4c2a-8fa7-be50e0f53533
+		summarizeBy: none
+		sourceColumn: SwitchToOrderMenu
+
+		annotation SummarizationSetBy = Automatic
+
+	column PriceRange
+		dataType: string
+		lineageTag: 90ed0329-5438-45f2-80bd-204293848d1d
+		summarizeBy: none
+		sourceColumn: PriceRange
+
+		annotation SummarizationSetBy = Automatic
+
+	column AggregateRating
+		dataType: string
+		lineageTag: 8d21e689-33c6-4822-b3b0-4b0352c99230
+		summarizeBy: none
+		sourceColumn: AggregateRating
+
+		annotation SummarizationSetBy = Automatic
+
+	column RatingColor
+		dataType: string
+		lineageTag: 41af4458-03cc-4cae-8ec0-3dbd9fcbf616
+		summarizeBy: none
+		sourceColumn: RatingColor
+
+		annotation SummarizationSetBy = Automatic
+
+	column RatingText
+		dataType: string
+		lineageTag: e7a144c4-53a2-430d-8196-65abcc98e980
+		summarizeBy: none
+		sourceColumn: RatingText
+
+		annotation SummarizationSetBy = Automatic
+
+	column Votes
+		dataType: int64
+		formatString: 0
+		lineageTag: ce2a2a31-96db-452e-bb77-eb1536bc3385
+		summarizeBy: sum
+		sourceColumn: Votes
+
+		annotation SummarizationSetBy = Automatic
+
+	partition zomatorestaurantdataset = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("3uz64mibb4nupcqihluo63sity-wfzm4zlbrqeuhgeccwo6kc3np4.datawarehouse.fabric.microsoft.com"),
+				    JagwinderLakehouseDev = Source{[Name="JagwinderLakehouseDev"]}[Data],
+				    dbo_zomatorestaurantdataset = JagwinderLakehouseDev{[Schema="dbo",Item="zomatorestaurantdataset"]}[Data]
+				in
+				    dbo_zomatorestaurantdataset
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
