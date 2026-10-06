@@ -1,11 +1,11 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
-    "type": "Report",
-    "displayName": "Zomato_PowerBI_Report-JK"
+    "type": "Lakehouse",
+    "displayName": "StagingLakehouseForDataflows_20261006213332"
   },
   "config": {
     "version": "2.0",
-    "logicalId": "dd70cb00-dbdf-48c6-ab6d-2b9594d26c8f"
+    "logicalId": "f6b93611-614b-969d-4dbc-943061af6b42"
   }
 }
