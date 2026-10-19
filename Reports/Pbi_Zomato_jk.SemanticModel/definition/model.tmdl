@@ -11,9 +11,13 @@ annotation __PBI_TimeIntelligenceEnabled = 1
 
 annotation PBI_ProTooling = ["DevMode"]
 
-annotation PBI_QueryOrder = ["zomatorestaurantdataset"]
+annotation PBI_QueryOrder = ["stg_zomatorestaurantdataset","DimRestaurant","DimLocation","DimCuisines","DimCurrency","FactRestaurant"]
 
-ref table zomatorestaurantdataset
+ref table DimRestaurant
+ref table DimLocation
+ref table DimCuisines
+ref table DimCurrency
+ref table FactRestaurant
 
 ref cultureInfo en-CA
 

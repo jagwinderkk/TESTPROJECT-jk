@@ -1,0 +1,61 @@
+table DimRestaurant
+	lineageTag: 7054a15a-adf5-4055-a21c-87c47c3e9849
+
+	column RestaurantID
+		dataType: int64
+		formatString: 0
+		lineageTag: cc4cc784-e4cf-4cbd-a746-a056667b7311
+		summarizeBy: none
+		sourceColumn: RestaurantID
+
+		annotation SummarizationSetBy = Automatic
+
+	column RestaurantName
+		dataType: string
+		lineageTag: 022bd85e-b4ba-4945-9caf-594a26abc26e
+		summarizeBy: none
+		sourceColumn: RestaurantName
+
+		annotation SummarizationSetBy = Automatic
+
+	column RestaurantAddress
+		dataType: string
+		lineageTag: c5451f05-fbd6-4041-bbf4-801c2ad34216
+		summarizeBy: none
+		sourceColumn: RestaurantAddress
+
+		annotation SummarizationSetBy = Automatic
+
+	column RestaurantKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 74a75b8e-a2ce-4e5e-b7fd-657dee0e42f0
+		summarizeBy: count
+		sourceColumn: RestaurantKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimRestaurant = m
+		mode: import
+		source =
+				let
+				    Source = stg_zomatorestaurantdataset,
+				
+				    ValidRows = Table.SelectRows(Source, each (try Number.From([RestaurantID]) otherwise null) <> null),
+				
+				    Typed = Table.TransformColumnTypes(ValidRows, {{"RestaurantID", Int64.Type}}),
+				
+				    Selected = Table.SelectColumns(Typed, {
+				        "RestaurantID", "RestaurantName", "RestaurantAddress"
+				    }),
+				
+				    Distinct = Table.Distinct(Selected, {"RestaurantID"}),
+				
+				    Keyed = Table.AddIndexColumn(Distinct, "RestaurantKey", 1, 1, Int64.Type)
+				in
+				    Keyed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,37 @@
+table DimCuisines
+	lineageTag: b8fbd75c-251d-47bf-bd66-20f91e8c514a
+
+	column Cuisines
+		dataType: string
+		lineageTag: 2cbb67a4-cce4-462b-ba84-8be8167b0ab1
+		summarizeBy: none
+		sourceColumn: Cuisines
+
+		annotation SummarizationSetBy = Automatic
+
+	column CuisinesKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 454c1558-47d3-4b7f-8002-389f69b574a0
+		summarizeBy: none
+		sourceColumn: CuisinesKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimCuisines = m
+		mode: import
+		source =
+				let
+				    Source = stg_zomatorestaurantdataset,
+				    Selected = Table.SelectColumns(Source, {"Cuisines"}),
+				    Distinct = Table.Distinct(Selected),
+				    Replace =  Table.ReplaceValue(Distinct, null, "Unknown", Replacer.ReplaceValue, {"Cuisines"}),
+				    Keyed = Table.AddIndexColumn(Replace, "CuisinesKey", 1, 1, Int64.Type)
+				
+				in
+				   Keyed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

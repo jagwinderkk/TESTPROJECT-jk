@@ -1,0 +1,108 @@
+table FactRestaurant
+	lineageTag: 02557585-7c35-4e0d-9475-1f42402663d7
+
+	column RestaurantKey
+		dataType: int64
+		formatString: 0
+		lineageTag: e17ca54b-f128-47f3-83ec-17bfdb096ad0
+		summarizeBy: count
+		sourceColumn: RestaurantKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column RestaurantID
+		dataType: int64
+		formatString: 0
+		lineageTag: aeaa025a-7c93-40b5-8e0b-ab8f148d065c
+		summarizeBy: none
+		sourceColumn: RestaurantID
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocationKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 52f0d75e-ef04-436f-b3f4-b62f2208a2e2
+		summarizeBy: none
+		sourceColumn: LocationKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CurrencyKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 729842ad-427a-40f8-8c75-38ee448b6f90
+		summarizeBy: none
+		sourceColumn: CurrencyKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column AggregateRating
+		dataType: string
+		lineageTag: 1026b899-c0a9-4d86-bfed-4cbb79888ea6
+		summarizeBy: none
+		sourceColumn: AggregateRating
+
+		annotation SummarizationSetBy = Automatic
+
+	column Votes
+		dataType: int64
+		formatString: 0
+		lineageTag: 7db8a59b-4427-4c36-b68a-cdc21a984b3c
+		summarizeBy: sum
+		sourceColumn: Votes
+
+		annotation SummarizationSetBy = Automatic
+
+	column AverageCostForTwo
+		dataType: int64
+		formatString: 0
+		lineageTag: f4fc4d48-ac60-4c8e-a891-39855ce7d16a
+		summarizeBy: sum
+		sourceColumn: AverageCostForTwo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cuisines
+		dataType: string
+		lineageTag: f0be78ab-6a45-42b6-a640-d482f12f9ea0
+		summarizeBy: none
+		sourceColumn: Cuisines
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactRestaurant = m
+		mode: import
+		source =
+				let
+				    Source = stg_zomatorestaurantdataset,
+				
+				    ValidRows = Table.SelectRows(Source, each (try Number.From([RestaurantID]) otherwise null) <> null),
+				
+				    Typed = Table.TransformColumnTypes(ValidRows, {
+				        {"RestaurantID", Int64.Type},
+				        {"AverageCostForTwo", Int64.Type}
+				    }),
+				
+				    LocKeys = Table.Distinct(DimLocation, {"CountryCode", "City", "Locality"}),
+				    WithLoc = Table.NestedJoin(Typed, {"CountryCode", "City", "Locality"},
+				        LocKeys, {"CountryCode", "City", "Locality"}, "Loc", JoinKind.LeftOuter),
+				    ExpLoc = Table.ExpandTableColumn(WithLoc, "Loc", {"LocationKey"}, {"LocationKey"}),
+				
+				    WithCur = Table.NestedJoin(ExpLoc, {"Currency"}, DimCurrency, {"Currency"}, "Cur", JoinKind.LeftOuter),
+				    ExpCur = Table.ExpandTableColumn(WithCur, "Cur", {"CurrencyKey"}, {"CurrencyKey"}),
+				
+				    WithRest = Table.NestedJoin(ExpCur, {"RestaurantID"}, DimRestaurant, {"RestaurantID"}, "Rest", JoinKind.LeftOuter),
+				    ExpRest = Table.ExpandTableColumn(WithRest, "Rest", {"RestaurantKey"}, {"RestaurantKey"}),
+				
+				    FactRestaurant = Table.SelectColumns(ExpRest, {
+				        "RestaurantKey", "RestaurantID", "LocationKey", "CurrencyKey","Cuisines",
+				        "AggregateRating", "Votes", "AverageCostForTwo"
+				    })
+				in
+				    FactRestaurant
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

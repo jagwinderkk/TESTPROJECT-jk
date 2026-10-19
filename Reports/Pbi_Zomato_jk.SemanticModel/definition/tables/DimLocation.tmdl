@@ -1,0 +1,81 @@
+table DimLocation
+	lineageTag: 1a291895-be64-41c8-b89b-a2753acc7b3b
+
+	column CountryCode
+		dataType: string
+		lineageTag: 80fa5552-56c5-46a3-b495-b46964082054
+		summarizeBy: none
+		sourceColumn: CountryCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: aacd3bbb-6939-4cf7-b9a9-b8de48005a39
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column Locality
+		dataType: string
+		lineageTag: 99b31fe5-75ea-402d-a485-d0319433e4fa
+		summarizeBy: none
+		sourceColumn: Locality
+
+		annotation SummarizationSetBy = Automatic
+
+	column LocalityVerbose
+		dataType: string
+		lineageTag: 2409c697-0bdc-49fc-af85-20144563b628
+		summarizeBy: none
+		sourceColumn: LocalityVerbose
+
+		annotation SummarizationSetBy = Automatic
+
+	column Longitude
+		dataType: double
+		lineageTag: aae893a4-61d6-47e7-9f72-0312d0a3c58e
+		summarizeBy: none
+		sourceColumn: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Latitude
+		dataType: double
+		lineageTag: 6eea0dce-6975-4731-b6e3-8b2768daa2a0
+		summarizeBy: none
+		sourceColumn: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LocationKey
+		dataType: int64
+		formatString: 0
+		lineageTag: f0840462-fa8f-450e-98e1-2013b7c6d44d
+		summarizeBy: none
+		sourceColumn: LocationKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimLocation = m
+		mode: import
+		source =
+				let
+				    Source = stg_zomatorestaurantdataset,
+				    Selected = Table.SelectColumns(Source, {"CountryCode","City","Locality","LocalityVerbose","Longitude","Latitude"}),
+				    Distinct = Table.Distinct(Selected),
+				    Replaced = Table.ReplaceValue(Distinct, null, "Unknown", Replacer.ReplaceValue, {"CountryCode", "City", "Locality", "LocalityVerbose"}),
+				    Keyed = Table.AddIndexColumn(Replaced, "LocationKey", 1, 1, Int64.Type)
+				
+				in
+				   Keyed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

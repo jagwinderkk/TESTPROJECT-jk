@@ -1,0 +1,18 @@
+relationship AutoDetected_bfec17ac-fb27-45c5-acac-2002a861687c
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: FactRestaurant.RestaurantID
+	toColumn: DimRestaurant.RestaurantID
+
+relationship AutoDetected_01ec4012-d036-4667-9ae6-577f589f4296
+	fromColumn: FactRestaurant.LocationKey
+	toColumn: DimLocation.LocationKey
+
+relationship AutoDetected_be2cb08e-145b-4872-a7a6-f6dacec0282c
+	fromColumn: FactRestaurant.CurrencyKey
+	toColumn: DimCurrency.CurrencyKey
+
+relationship AutoDetected_72ee6109-30c3-41fb-b4de-3f7f5f7a5d3b
+	fromColumn: FactRestaurant.Cuisines
+	toColumn: DimCuisines.Cuisines
+

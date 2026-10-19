@@ -1,0 +1,132 @@
+expression stg_zomatorestaurantdataset = ```
+		let
+		    Source = Sql.Database(
+		        "3uz64mibb4nupcqihluo63sity-wfzm4zlbrqeuhgeccwo6kc3np4.datawarehouse.fabric.microsoft.com",
+		        "JagwinderLakehouseDev",
+		        [
+		            Query = "
+		                WITH Duduped as 
+		                (
+		                  SELECT *, ROW_NUMBER() OVER
+		                    (
+		                        PARTITION BY RestaurantID
+		                        ORDER BY RestaurantID
+		                    ) as rn
+		                   FROM dbo.zomatorestaurantdataset
+		                )
+		-- Cleaning
+		SELECT
+		    -- Keys
+		    RestaurantID,
+		    -- Remove tabs/newlines/extra spaces
+		    TRIM(
+		        REPLACE(
+		            REPLACE(
+		                REPLACE(RestaurantName, CHAR(9), ''),
+		            CHAR(10), ''),
+		        CHAR(13), '')
+		    ) AS RestaurantName,
+		
+		    CountryCode,
+		
+		    -- Clean City
+		  --  CASE
+		  --      WHEN City LIKE '%,%'
+		   --     THEN TRIM(LEFT(City, CHARINDEX(',', City) - 1))
+		  --      ELSE TRIM(City)
+		  --  END AS 
+		    City,
+		
+		    -- Clean address text
+		    TRIM(Address) AS RestaurantAddress,
+		
+		    TRIM(Locality) AS Locality,
+		
+		    TRIM(LocalityVerbose) AS LocalityVerbose,
+		
+		    CASE
+		       WHEN TRY_CAST(Longitude AS DECIMAL(12,8)) IS NULL
+		        THEN NULL
+		      ELSE CAST(Longitude AS DECIMAL(12,8))
+		    END AS Longitude,
+		    
+		    CASE
+		       WHEN TRY_CAST(Latitude AS DECIMAL(12,8)) IS NULL
+		        THEN NULL
+		      ELSE CAST(Latitude AS DECIMAL(12,8))
+		    END AS Latitude,
+		
+		    TRIM(Cuisines) AS Cuisines,
+		
+		    TRY_CAST(AverageCostForTwo AS DECIMAL(18,2)) AS AverageCostForTwo,
+		
+		    TRIM(
+		    CASE
+		      WHEN Currency IN ('Yes', 'No')
+		        THEN NULL
+		
+		      WHEN Currency = 'Pounds(??)'
+		        THEN 'Pound (£)'
+		
+		      WHEN Currency = 'Dollar($)'
+		         AND UPPER([LocalityVerbose]) LIKE '%SINGAPORE%'
+		        THEN 'Dollar (S$)'
+		
+		      WHEN Currency = 'Dollar($)'
+		        THEN 'Dollar (U$)'
+		     ELSE Currency
+		   END 
+		  ) AS Currency,
+		
+		
+		    -- Standardize flags
+		    CASE
+		        WHEN UPPER(HasTableBooking) IN ('YES','Y')
+		        THEN 1
+		        ELSE 0
+		    END AS HasTableBooking,
+		
+		    CASE
+		        WHEN UPPER(HasOnlineDelivery) IN ('YES','Y')
+		        THEN 1
+		        ELSE 0
+		    END AS HasOnlineDelivery,
+		
+		    CASE
+		        WHEN UPPER(IsDeliveringNow) IN ('YES','Y')
+		        THEN 1
+		        ELSE 0
+		    END AS IsDeliveringNow,
+		
+		    CASE
+		        WHEN UPPER(SwitchToOrderMenu) IN ('YES','Y')
+		        THEN 1
+		        ELSE 0
+		    END AS SwitchToOrderMenu,
+		
+		    PriceRange,
+		
+		   TRIM(AggregateRating) AS AggregateRating,
+		
+		    TRIM(RatingColor) AS RatingColor,
+		
+		    TRIM(RatingText) AS RatingText,
+		
+		    CAST(Votes AS INT) AS Votes
+		
+		FROM Duduped
+		           WHERE rn = 1;
+		
+		
+		               "
+		        ]
+		    )
+		in
+		    Source
+		```
+	lineageTag: 07e89e1a-53b7-4ade-b21a-93d3936a03fe
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

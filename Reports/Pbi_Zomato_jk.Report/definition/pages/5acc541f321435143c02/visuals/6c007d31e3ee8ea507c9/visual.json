@@ -1,0 +1,125 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "6c007d31e3ee8ea507c9",
+  "position": {
+    "x": 463.34670338810747,
+    "y": 63.5966063473873,
+    "z": 0,
+    "height": 511.04415814864791,
+    "width": 1253.7616679913497,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimRestaurant"
+                    }
+                  },
+                  "Property": "RestaurantName"
+                }
+              },
+              "queryRef": "DimRestaurant.RestaurantName",
+              "nativeQueryRef": "RestaurantName"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimRestaurant"
+                    }
+                  },
+                  "Property": "RestaurantAddress"
+                }
+              },
+              "queryRef": "DimRestaurant.RestaurantAddress",
+              "nativeQueryRef": "RestaurantAddress"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "FactRestaurant"
+                        }
+                      },
+                      "Property": "AverageCostForTwo"
+                    }
+                  },
+                  "Function": 1
+                }
+              },
+              "queryRef": "Sum(FactRestaurant.AverageCostForTwo)",
+              "nativeQueryRef": "Average of AverageCostForTwo"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "FactRestaurant"
+                      }
+                    },
+                    "Property": "AverageCostForTwo"
+                  }
+                },
+                "Function": 0
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "0e6c07a51ff03822553c",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimRestaurant"
+              }
+            },
+            "Property": "RestaurantName"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "bb1998bfbbab047ffdf4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimRestaurant"
+              }
+            },
+            "Property": "RestaurantAddress"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}
