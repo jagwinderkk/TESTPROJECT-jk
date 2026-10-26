@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Dataflow",
+    "displayName": "jk-zomato-lakehouse-dataflow"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c9945164-1e4b-bc00-42fa-30bfc2f40ffc"
+  }
+}

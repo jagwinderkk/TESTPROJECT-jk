@@ -1,0 +1,34 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {
+    "allowModernEvaluationEngine": true
+  },
+  "name": "jk-zomato-lakehouse-dataflow",
+  "queryGroups": [],
+  "documentLocale": "en-US",
+  "queriesMetadata": {
+    "DefaultDestination": {
+      "queryId": "fd68ace9-5fca-48fa-a63e-2ee19283bab3",
+      "queryName": "DefaultDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    },
+    "ZomatoRestaurantDataset": {
+      "queryId": "d3d654b8-a7b7-48c4-89a1-938668690c21",
+      "queryName": "ZomatoRestaurantDataset",
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"9051e4aa-eba2-4067-8ac3-f3b746200813\",\"DatasourceId\":\"64e62218-74bd-497e-aac2-03b2c02f9a73\"}"
+    },
+    {
+      "path": "https://sdktekservices-my.sharepoint.com/personal/jagwinder_kaura_sdktek_com/",
+      "kind": "Web",
+      "connectionId": "{\"ClusterId\":\"9051e4aa-eba2-4067-8ac3-f3b746200813\",\"DatasourceId\":\"3815a976-af4b-4c9a-8b61-3fcab57e6d23\"}"
+    }
+  ]
+}
